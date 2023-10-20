@@ -10,7 +10,11 @@ namespace bcg_bot.Types.Dictionaries
     {
         public static readonly Dictionary<string,string> messages = new Dictionary<string, string>() 
         {
-            {"START", "Привет, пидорас"}
+            {"START", "Привет, пидорас, скажи своё фио"},
+            {"FIO_ERROR", "Шлюха, фио научись писать"},
+            { "INPUT_BIRTH","Укажи пожалуйста свою дату рождения"},
+            {"BIRTH_ERROR","Неверно ввёдена дата"},
+            { "ASK_UNIVERSITY","Ты из МГТУ им. Н.Э.Баумана"}
         };
     }
 }

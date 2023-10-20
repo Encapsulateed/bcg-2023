@@ -24,9 +24,20 @@ global using Telegram.Bot;
 global using Telegram.Bot.Types.ReplyMarkups;
 using bcg_bot.Bot;
 using bcg_bot.Types;
+using System.Text.RegularExpressions;
+using Telegram.Bots.Types;
 
 try
 {
+    if (Regex.IsMatch("09.09.2003", @"^\d{1,2}/\d{1,2}/\d{4}$|^\d{4}-\d{1,2}-\d{1,2}$|^\d{1,2}[/\.]\d{1,2}[/\.]\d{4}$"))
+    {
+    }
+    else
+    {
+        Console.WriteLine("0");
+
+    }
+
 
     await Bot.Start();
 }

@@ -9,21 +9,31 @@ namespace bcg_bot.Types.Enums.Telegram
 {
     internal class Comands
     {
-        public enum TextComands
+        public enum TextComand
         {
             START,
-
+            INPUT_FIO,
+            NULL,
+            INPUT_BIRTH
         }
 
-        public static Dictionary<TextComands, string> QueryById = new Dictionary<TextComands, string>()
+        public static Dictionary<TextComand, string> QueryById = new Dictionary<TextComand, string>()
         {
-            {0,"/start" },
+            {(TextComand)0,"/start" },
+            {(TextComand)1,"INPUT_FIO" },
+            {(TextComand)2,"" },
+            {(TextComand)3,"INPUT_BIRTH" },
+
+
+
         };
 
-        public static Dictionary<string, TextComands> IdByComand = new Dictionary<string, TextComands>()
+        public static Dictionary<string, TextComand> IdByComand = new Dictionary<string, TextComand>()
         {
-            {"/start",0 }
-
+            {"/start",(TextComand)0 },
+            {"INPUT_FIO",(TextComand)1 },
+            {"",(TextComand)2},
+            {"INPUT_BIRTH",(TextComand)3},
         };
     }
 }

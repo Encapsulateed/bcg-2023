@@ -39,6 +39,7 @@ namespace bcg_bot.Bot
                 else if (update.Type == UpdateType.CallbackQuery)
                 {
                     await CallBackHandler(update, bot);
+                    await bot.DeleteMessageAsync(update.CallbackQuery.From.Id, update.CallbackQuery.Message.MessageId);
 
                 }
 

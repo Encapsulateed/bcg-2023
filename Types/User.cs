@@ -16,11 +16,9 @@ namespace bcg_bot.Types
 
         public Task Add()
         {
-            Console.WriteLine("GAY");
 
             return Task.Run(async () =>
             {
-                Console.WriteLine("GAY");
 
                 using (BcgContext db = new BcgContext())
                 {
@@ -47,13 +45,14 @@ namespace bcg_bot.Types
                     try
                     {
                         var user = db.Users.Where(usr => usr.ChatId == this.user.ChatId).FirstOrDefault();
-                        db.Update(user).CurrentValues.SetValues(this.user.ChatId);
+                        Console.WriteLine($"UPDATE {user.ChatId}");
+                        db.Update(user).CurrentValues.SetValues(this.user);
 
                         await db.SaveChangesAsync();
                     }
                     catch (DbUpdateException ex)
                     {
-                        Console.WriteLine($"Exeption in User.cs\nFunction: User.Update()\n\n {ex}\n\n");
+                        Console.WriteLine($"Exeption in User.cs\nFunction: User.Update()\\n\n");
                     }
                 }
             });

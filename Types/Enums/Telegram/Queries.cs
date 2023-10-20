@@ -8,15 +8,22 @@ namespace bcg_bot.Types.Enums.Telegram
 {
     internal class Queries
     {
-        public enum InlineQueries
+        public enum InlineComand
         {
-            PARTICIPANT,
+            TEXT_BACK,
+            QUERY_BACK
 
         }
-        public static Dictionary<int, string> QueryById = new Dictionary<int, string>()
+        public static Dictionary<InlineComand, string> QueryById = new Dictionary<InlineComand, string>()
         {
-            {0,"Участник" },
+            {(InlineComand)0,"backText" },
+            {(InlineComand)1,"backQuery" },
 
+        };
+        public static Dictionary<string, InlineComand> IdByQuery = new Dictionary<string, InlineComand>()
+        {
+            {"backText",(InlineComand)0 },
+            {"backQuery",(InlineComand)1 },
 
         };
 
