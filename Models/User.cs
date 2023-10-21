@@ -27,6 +27,8 @@ public partial class User
 
     public int? Comand { get; set; }
 
+    public string? Phone { get; set; }
+
     public virtual Comand? ComandNavigation { get; set; }
 
     public virtual ICollection<Comand> Comands { get; set; } = new List<Comand>();

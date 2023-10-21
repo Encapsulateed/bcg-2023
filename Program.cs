@@ -26,18 +26,24 @@ using bcg_bot.Bot;
 using bcg_bot.Types;
 using System.Text.RegularExpressions;
 using Telegram.Bots.Types;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using bcg_bot.Models;
 
 try
 {
-    if (Regex.IsMatch("09.09.2003", @"^\d{1,2}/\d{1,2}/\d{4}$|^\d{4}-\d{1,2}-\d{1,2}$|^\d{1,2}[/\.]\d{1,2}[/\.]\d{4}$"))
+    for(int i = 0; i < 10; i++)
     {
+        var cmd = new bcg_bot.Models.Comand() { Title = $"Команда {i+1}", Track = i%2,Capitan = 477686161 };
+        var com = new bcg_bot.Types.Comand() {comand =cmd};
+       await com.Add();
+        
     }
-    else
+    for (int i = 10; i < 20; i++)
     {
-        Console.WriteLine("0");
-
+        var cmd = new bcg_bot.Models.Comand() { Title = $"Команда {i + 1}", Track = i % 2, Capitan = 477686161 };
+        var com = new bcg_bot.Types.Comand() { comand = cmd };
+        await com.Add();
     }
-
 
     await Bot.Start();
 }

@@ -24,13 +24,12 @@ namespace bcg_bot.Types
                 {
                     try
                     {
-                        Console.WriteLine(this.user.ChatId);
                         await db.Users.AddAsync(this.user);
                         await db.SaveChangesAsync();
                     }
                     catch (DbUpdateException ex)
                     {
-                        Console.WriteLine($"Exeption in User.cs\nFunction: User.Add()\n\n {ex}\n\n");
+                        Console.WriteLine($"Exeption in User.cs\nFunction: User.Add()\n\n");
                     }
                 }
             });

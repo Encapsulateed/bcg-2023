@@ -19,11 +19,10 @@ public partial class BcgContext : DbContext
     public virtual DbSet<Comand> Comands { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
-
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         var conf = new Config();
-         optionsBuilder.UseNpgsql(conf.GetConnetion());
+        optionsBuilder.UseNpgsql(conf.GetConnetion());
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -66,6 +65,9 @@ public partial class BcgContext : DbContext
             entity.Property(e => e.Fio)
                 .HasMaxLength(255)
                 .HasColumnName("fio");
+            entity.Property(e => e.Phone)
+                .HasMaxLength(255)
+                .HasColumnName("phone");
             entity.Property(e => e.PrevComand)
                 .HasMaxLength(255)
                 .HasColumnName("prevComand");

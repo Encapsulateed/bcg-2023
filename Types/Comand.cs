@@ -9,7 +9,7 @@ namespace bcg_bot.Types
 {
     internal class Comand
     {
-        private Models.Comand? comand;
+        public Models.Comand? comand { get; set; }
 
 
         public Task Add()
@@ -70,6 +70,32 @@ namespace bcg_bot.Types
 
             }
         }
+        public static List<Comand> GetComandListPaginated(int prevId, int Track)
+        {
+
+
+            using (BcgContext db = new BcgContext())
+            {
+                try
+                {
+                    var comands = db.Comands.Where(comand => comand.Track == Track).ToList().Where(comand => (comand.Id > prevId)).Take(10);
+                    var lst = new List<Comand>();
+                    foreach (var com in comands)
+                    {
+                        lst.Add(new Comand() { comand = com });
+                    }
+                    return lst;
+
+                }
+                catch (DbUpdateException ex)
+                {
+                    Console.WriteLine($"Exeption in User.cs\nFunction: Comand.GetComandListPaginated()\n\n {ex}\n\n");
+                }
+            }
+
+            return null;
+
+        }
     }
-    
+
 }
