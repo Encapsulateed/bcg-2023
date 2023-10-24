@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using bcg_bot.Types;
 using Microsoft.EntityFrameworkCore;
 
 namespace bcg_bot.Models;
@@ -19,11 +18,10 @@ public partial class BcgContext : DbContext
     public virtual DbSet<Comand> Comands { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        var conf = new Config();
-        optionsBuilder.UseNpgsql(conf.GetConnetion());
-    }
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=bcg;Username=postgres;Password=Griver2070");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -35,11 +33,6 @@ public partial class BcgContext : DbContext
 
             entity.Property(e => e.Id).HasDefaultValueSql("nextval('\"Comands_Id_seq\"'::regclass)");
             entity.Property(e => e.Title).HasMaxLength(255);
-
-            entity.HasOne(d => d.CapitanNavigation).WithMany(p => p.Comands)
-                .HasForeignKey(d => d.Capitan)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("Comands_Capitan_fkey");
         });
 
         modelBuilder.Entity<User>(entity =>
@@ -57,6 +50,9 @@ public partial class BcgContext : DbContext
             entity.Property(e => e.BmstuGroup)
                 .HasMaxLength(255)
                 .HasColumnName("bmstu_group");
+            entity.Property(e => e.Code)
+                .ValueGeneratedOnAdd()
+                .HasColumnName("code");
             entity.Property(e => e.ComandLine)
                 .HasMaxLength(255)
                 .HasColumnName("comandLine");
@@ -65,6 +61,9 @@ public partial class BcgContext : DbContext
             entity.Property(e => e.Fio)
                 .HasMaxLength(255)
                 .HasColumnName("fio");
+            entity.Property(e => e.Link)
+                .HasMaxLength(255)
+                .HasColumnName("link");
             entity.Property(e => e.Phone)
                 .HasMaxLength(255)
                 .HasColumnName("phone");

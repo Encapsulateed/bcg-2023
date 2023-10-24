@@ -1,4 +1,5 @@
-﻿using bcg_bot.Models;
+﻿using bcg_bot.Google;
+using bcg_bot.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,7 +41,7 @@ namespace bcg_bot.Types
                     try
                     {
                         var comand = db.Comands.Where(comand => comand.Id == this.comand.Id).FirstOrDefault();
-                        db.Update(comand).CurrentValues.SetValues(this.comand.Id);
+                        db.Update(comand).CurrentValues.SetValues(this.comand);
 
                         await db.SaveChangesAsync();
                     }
@@ -51,13 +52,13 @@ namespace bcg_bot.Types
                 }
             });
         }
-        void Get(int Id)
+        public async Task Get()
         {
             using (BcgContext db = new BcgContext())
             {
                 try
                 {
-                    var comand = db.Comands.Where(comand => comand.Id == Id).FirstOrDefault();
+                    var comand = db.Comands.Where(comand => comand.Id == this.comand.Id).FirstOrDefault();
                     if (comand is not null)
                     {
                         this.comand = comand;
@@ -70,15 +71,39 @@ namespace bcg_bot.Types
 
             }
         }
-        public static List<Comand> GetComandListPaginated(int prevId, int Track)
+        public async Task GetByCapitanId()
         {
-
-
             using (BcgContext db = new BcgContext())
             {
                 try
                 {
-                    var comands = db.Comands.Where(comand => comand.Track == Track).ToList().Where(comand => (comand.Id > prevId)).Take(10);
+                    var comand = db.Comands.Where(comand => comand.Capitan == this.comand.Capitan).FirstOrDefault();
+                    if (comand is not null)
+                    {
+                        this.comand = comand;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"No such comand exeption in Comand.cs\nFunction: Comand.Get()\n\n {ex}\n\n");
+                }
+
+            }
+        }
+
+        public static List<Comand> GetComandListPaginated(int prevId, int Track,out bool isMore)
+        {
+
+            isMore = false;
+            using (BcgContext db = new BcgContext())
+            {
+                try
+                {
+
+                    var comands = db.Comands.Where(comand => comand.Track == Track).ToList().Where(comand => (comand.Id > prevId));
+                    isMore = comands.Count() > 10;
+
+                    comands = comands.Take(10);
                     var lst = new List<Comand>();
                     foreach (var com in comands)
                     {
@@ -95,6 +120,15 @@ namespace bcg_bot.Types
 
             return null;
 
+        }
+
+        public Task WriteToGoogle()
+        {
+            return Task.Run(async () => 
+            {
+                var gw = new GoogleWorker();
+                await gw.AppendComand(this);
+            });
         }
     }
 

@@ -15,7 +15,5 @@ public partial class Comand
 
     public int? UserCount { get; set; }
 
-    public virtual User CapitanNavigation { get; set; } = null!;
-
     public virtual ICollection<User> Users { get; set; } = new List<User>();
 }

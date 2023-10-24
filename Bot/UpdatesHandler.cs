@@ -53,7 +53,10 @@ namespace bcg_bot.Bot
 
             await bot.SendChatActionAsync(chatId, ChatAction.Typing);
 
-            await ComandExecutor.Execute(message_text, chatId, bot);
+            var link = message.From.Username != null ? "@" + message.From.Username : "";
+
+
+            await ComandExecutor.Execute(message_text, chatId, bot,link);
 
         }
         private static async Task CallBackHandler(Update update, TelegramBotClient bot)

@@ -2,3 +2,4 @@
 bin/
 obj/
 conf.json
+secrets.json
